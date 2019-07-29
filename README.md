@@ -10,13 +10,13 @@ IPV6地址又相当的长，通过输入访问变得难以实现，这个时候�
 ### 使用脚本前需要做的
 1. 一台可以联网的树莓派设备（其他Linux系统设备也是可以的）
 2. 注册一个域名，免费的或者收费的都可以（国内的域名需要备案）
-3. 注册一个CloudFlare账户 (www.cloudflare.com)，并将需要使用的域名添加到账户上，完成配置后根据需要添加服务设备的IPV6地址添加一个AAAA解析，并设为仅进行DNS解析
+3. 注册一个CloudFlare账户 ( www.cloudflare.com ), 并将需要使用的域名添加到账户上，完成配置后根据需要添加服务设备的IPV6地址添加一个AAAA解析，并设为仅进行DNS解析
 4. 查询CloudFlare账户的Globel ID并记录下来，用于后续配置
 
 ### 使用方法
 打开命令窗口，执行以下程序：
 ```shell
-wget 
+wget https://raw.githubusercontent.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/master/CloudFlare-ddns.sh
 sudo chmod +x /home/pi/CloudFlare-ddns.sh #目录根据实际用户等进行更改
 ```
 需要对脚本内的个人配置信息进行更改，目录和上一条命令保持一致
