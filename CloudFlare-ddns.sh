@@ -9,12 +9,21 @@ record_type="AAAA"             #A or AAAA,ipv4 或 ipv6解析
 
 #选择合适的ip获取方式， select the correct get ip method
 ip=$(curl -6 ip.sb)     #通过网络获取ipv6地址,get ipv6 address through the internet
-#ip=$(ifconfig | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}') #通过本地获取ipv6地址,get ipv6 address through the local terminal
+#ip=$(sudo ifconfig eth0 | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}') #通过本地eth0获取ipv6地址,可配置网卡,get ipv6 address through the local terminal,can config the ethnet card
 #ip=$(curl -4 ip.sb)    #通过网络获取ipv4地址，get ipv4 address through the internet
-#ip=$(ifconfig | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}') #通过本地获取ipv4地址,get ipv4 address through the local terminal
+#ip=$(sudo ifconfig eth0 | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}') #通过本地eth0获取ipv4地址,可配置网卡，get ipv4 address through the local terminal,can config the ethnet card
 ip_file="ip.txt"        #保存地址信息,save ip information in the ip.txt
 id_file="cloudflare.ids"
 log_file="cloudflare.log"
+
+#server酱推送函数
+Pushsend(){
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #server酱key
+    title=IPV6地址变动
+    content=IPV6地址变动到$ip
+    curl "http://sc.ftqq.com/$key.send?text=$title&desp=$content" >/dev/null 2>&1 &
+}
+
 
 # 日志 log file
 log() {
@@ -59,6 +68,7 @@ if [[ $update == *"\"success\":false"* ]]; then
 else
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
+    Pushsend
     log "$message"
     echo "$message"
 fi
