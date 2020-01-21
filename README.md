@@ -1,15 +1,13 @@
 # Raspberry pi IPV6 DDNS Solution
 
-#### 树莓派IPV6 DDNS解决方案
-
-### 更新日志：V1.1
-
-添加使用本地方式获取IPV4和IPV6地址，使用时根据需要注释使用
+#### 树莓派IPV6 DDNS解决方案，支持Server酱版本
 
 ### 背景
 随着IPV6的逐渐普及，国内各个地方的宽带都开始分配IPV6地址，不同于IPV4很多分配内网地址的情况，IPV6一般分配的都是公网地址，这就为树莓派以及类似这样的设备联网提供了很大的方便。不过，分配的IP地址一般都会以一定的周期变动，一般是一天左右。
 
-IPV6地址又相当的长，通过输入访问变得难以实现，这个时候在树莓派上搭建一个动态域名解析服务（DDNS）就很有必要。在这里我们使用CloudFlare的API接口来实现动态域名解析
+IPV6地址又相当的长，通过输入访问变得难以实现，这个时候在树莓派上搭建一个动态域名解析服务（DDNS）就很有必要。在这里我们使用CloudFlare的API接口来实现动态域名解析。
+
+Server酱是「Server酱」，英文名「ServerChan」，是从服务器推报警和日志到手机的工具，在本脚本中可以推送服务器的IP变动信息，使用前需要在网站使用github登录获得一个SCKEY，网站地址：[Server酱](https://sc.ftqq.com/3.version) 
 
 ### 使用脚本前需要做的
 1. 一台可以联网的树莓派设备（其他Linux系统设备也是可以的）
@@ -36,7 +34,20 @@ auth_key="*****************"   #你的cloudflare账户Globel ID
 zone_name="Your main Domain"   #你的域名
 record_name="Your Full Domain" #完整域名
 ```
-以任意一个域名为例，ipv6.google.com 这个域名，zone_name为 `google.com` 和record_name则为 `ipv6.google.com` ，修改完成后，保存并退出。
+以任意一个域名为例，ipv6.google.com 这个域名，zone_name为 `google.com` 和record_name则为 `ipv6.google.com` 。然后修改代码中的push函数，填入SCKEY信息，title和content内容可以更改，title为推送的标题，content为推送的内容：
+
+```shell
+#server酱推送函数
+Pushsend(){
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #server酱key
+    title=IPV6地址变动
+    content=IPV6地址变动到$ip
+    curl "http://sc.ftqq.com/$key.send?text=$title&desp=$content" >/dev/null 2>&1 &
+}
+
+```
+
+修改完成后，保存并退出。
 
 在命令行中输入以下内容运行脚本：
 ```shell
