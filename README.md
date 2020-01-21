@@ -15,7 +15,7 @@ sudo ifconfig ppp0 | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk 
 ```
 在`crontab -e`中，更改为：
 ```shell
-*/5* * * *  sudo /home/pi/CloudFlare-ddns.sh >/dev/null 2>&1
+*/5 * * * *  sudo /home/pi/CloudFlare-ddns.sh >/dev/null 2>&1
 ```
 
 ### 背景
