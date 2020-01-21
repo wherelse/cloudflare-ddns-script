@@ -1,10 +1,22 @@
-# Raspberry pi IPV6 DDNS Solution
+# Raspberry pi IPV6 DDNS Solution / CloudFlare DDNS script
 
-#### 树莓派IPV6 DDNS解决方案
+#### 树莓派IPV6 DDNS解决方案/cloudflare ddns 脚本
+
+## 更新[Server酱支持版本](https://github.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/tree/ServerPush) 
 
 ### 更新日志：V1.1
 
-添加使用本地方式获取IPV4和IPV6地址，使用时根据需要注释使用
+添加使用本地方式获取IPV4和IPV6地址，使用时根据需要注释使用，可能需要更改绑定网卡，并在crontab运行时使用sudo命令。
+例如在使用PPPOE拨号获取地址时:
+```shell
+sudo ifconfig eth0 | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}')
+#更改为
+sudo ifconfig ppp0 | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}')
+```
+在`crontab -e`中，更改为：
+```shell
+*/5* * * *  sudo /home/pi/CloudFlare-ddns.sh >/dev/null 2>&1
+```
 
 ### 背景
 随着IPV6的逐渐普及，国内各个地方的宽带都开始分配IPV6地址，不同于IPV4很多分配内网地址的情况，IPV6一般分配的都是公网地址，这就为树莓派以及类似这样的设备联网提供了很大的方便。不过，分配的IP地址一般都会以一定的周期变动，一般是一天左右。
