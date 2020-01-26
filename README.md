@@ -67,3 +67,9 @@ bash /home/pi/CloudFlare-ddns.sh
 
 ### 结束
 该脚本不仅适用于树莓派，在其他Linux服务器上也适用，使用时都需要根据自己的实际情况更改以上配置时使用的路径
+
+### FAQ
+错误日志为以下内容时：
+`API UPDATE FAILED. DUMPING RESULTS:`
+`{"success":false,"errors":[{"code":7001,"message":"Method PUT not available for that URI."}],"messages":[],"result":null}`
+删除脚本运行目录下的`cloudflare.ids`文件，然后再次尝试运行。
