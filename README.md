@@ -18,7 +18,7 @@ Server酱是「Server酱」，英文名「ServerChan」，是从服务器推报�
 ### 使用方法
 打开命令窗口，执行以下程序：
 ```shell
-wget https://raw.githubusercontent.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/master/CloudFlare-ddns.sh
+wget https://raw.githubusercontent.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/ServerPush/CloudFlare-ddns.sh
 sudo chmod +x /home/pi/CloudFlare-ddns.sh #目录根据实际用户等进行更改
 ```
 需要对脚本内的个人配置信息进行更改，目录和上一条命令保持一致
@@ -66,3 +66,11 @@ bash /home/pi/CloudFlare-ddns.sh
 
 ### 结束
 该脚本不仅适用于树莓派，在其他Linux服务器上也适用，使用时都需要根据自己的实际情况更改以上配置时使用的路径
+
+
+
+### FAQ
+错误日志为以下内容时：
+`API UPDATE FAILED. DUMPING RESULTS:`
+`{"success":false,"errors":[{"code":7001,"message":"Method PUT not available for that URI."}],"messages":[],"result":null}`
+删除脚本运行目录下的`cloudflare.ids`文件，然后再次尝试运行。
