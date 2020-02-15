@@ -16,7 +16,7 @@
 ### 使用方法
 打开命令窗口，执行以下程序：
 ```shell
-wget https://raw.githubusercontent.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/master/cloudflare-ddns.sh
+wget https://raw.githubusercontent.com/wherelse/cloudflare-ddns-script/master/cloudflare-ddns.sh
 sudo chmod +x /home/username/cloudflare-ddns.sh #目录根据实际用户等进行更改
 ```
 需要对脚本内的个人配置信息进行更改，目录和上一条命令保持一致
