@@ -1,30 +1,42 @@
 #!/bin/bash
 
 # CHANGE THESE
-auth_email="xxxxxxx@xxxx.com"  #你的CloudFlare注册账户邮箱,your cloudflare email address
+auth_email="xxxxxxx@xxxx.com"  #你的CloudFlare注册账户邮箱,your cloudflare account email address
 auth_key="*****************"   #你的cloudflare账户Globel ID ,your cloudflare Globel ID
 zone_name="Your main Domain"   #你的域名,your root domain address
 record_name="Your Full Domain" #完整域名,your full domain address
 record_type="AAAA"             #A or AAAA,ipv4 或 ipv6解析
 
-ip_index="local"            #internet or local
-eth_card="eth0"             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效
+ip_index="local"            #use "internet" or "local",使用本地方式还是网络方式获取地址
+eth_card="eth0"             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效,the default ethernet card is eth0
+
+ip_file="ip.txt"            #保存地址信息,save ip information in the ip.txt
+id_file="cloudflare.ids"
+log_file="cloudflare.log"
 
 
-if [ $record_type == "AAAA" ];then
-    if [ $ip_index == "internet" ];then
+if [ $record_type = "AAAA" ];then
+    if [ $ip_index = "internet" ];then
         ip=$(curl -6 ip.sb)
-    elif [ $ip_index == "local" ];then
-        ip=$(sudo ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}')
+    elif [ $ip_index = "local" ];then
+        if [ "$user" = "root" ];then
+            ip=$(ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}')
+        else
+            ip=$(/sbin/ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}')
+        fi
     else 
         echo "Error IP index, please input the right type"
         exit 0
     fi
-elif [ $record_type == "A" ];then
-    if [ $ip_index == "internet" ];then
+elif [ $record_type = "A" ];then
+    if [ $ip_index = "internet" ];then
         ip=$(curl -4 ip.sb)
-    elif [ $ip_index == "local" ];then
-        ip=$(sudo ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}')
+    elif [ $ip_index = "local" ];then
+        if [ "$user" = "root" ];then
+            ip=$(ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}')
+        else
+            ip=$(/sbin/ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}')
+        fi
     else 
         echo "Error IP index, please input the right type"
         exit 0
@@ -33,15 +45,6 @@ else
     echo "Error DNS type"
     exit 0
 fi
-
-#选择合适的ip获取方式， select the correct get ip method
-#ip=$(curl -6 ip.sb)     #通过网络获取ipv6地址,get ipv6 address through the internet
-#ip=$(sudo ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}') #通过本地获取ipv6地址,get ipv6 address through the local terminal
-#ip=$(curl -4 ip.sb)    #通过网络获取ipv4地址，get ipv4 address through the internet
-#ip=$(sudo ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}') #通过本地获取ipv4地址,get ipv4 address through the local terminal
-ip_file="ip.txt"        #保存地址信息,save ip information in the ip.txt
-id_file="cloudflare.ids"
-log_file="cloudflare.log"
 
 # 日志 log file
 log() {
