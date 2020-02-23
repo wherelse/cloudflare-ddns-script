@@ -2,7 +2,8 @@
 
 #### cloudflare ddns 脚本/树莓派IPV6 DDNS解决方案
 
-<center>中文|[English](/README-EN.md)</center>
+中文 | [English](/README-EN.md)
+
 ## 更新[Server酱支持版本](https://github.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/tree/ServerPush) 
 
 ### 概述

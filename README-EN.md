@@ -2,7 +2,7 @@
 
 ### update[ServerChan version](https://github.com/wherelse/cloudFlare-ddns-script/tree/ServerPush)
 
-<center>English|[中文](/README.md)</center>
+English | [中文](/README.md)
 
 ### Overview
 This script is a DDNS script based on the cloudflare API, which supports IPV4 and IPV6. The IP address of the script installation host can be obtained through the network and local methods. Theoretically supports all hosts using the Linux system. It has been tested and available on debian and ubuntu.
