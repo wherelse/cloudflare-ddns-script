@@ -50,7 +50,7 @@ If it says `IP changed to: xxxxx` or` IP has not changed.`, the configuration is
 In order to achieve dynamic domain name resolution, the script must be kept running to obtain the IP status. Here the system crontab is used for timing.
 Enter the `crontab -e` at the terminal,Add the following at the end of the file:
 ```shell
-*/5 * * * *  /home/username/cloudFlare-ddns.sh >/dev/null 2>&1
+*/5 * * * *  /home/username/cloudflare-ddns.sh >/dev/null 2>&1
 ```
 Save and exit after making changes.Set the script here to execute the `cloudflare-ddns.sh` script every five minutes to achieve dynamic domain name resolution.
 
