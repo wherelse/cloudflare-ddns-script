@@ -51,7 +51,7 @@ bash /home/username/cloudflare-ddns.sh
 为了实现动态域名解析，必须让脚本保持运行以获取IP状态，这里使用系统crontab定时
 在命令行输入：`crontab -e` 后在文件最后添加以下内容
 ```shell
-*/5 * * * *  /home/username/cloudFlare-ddns.sh >/dev/null 2>&1
+*/5 * * * *  /home/username/cloudflare-ddns.sh >/dev/null 2>&1
 ```
 更改完成后保存并退出。
 在这里将脚本设置为每五分钟执行一次 `cloudflare-ddns.sh` 脚本，就可以实现动态域名解析了。
