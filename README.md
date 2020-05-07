@@ -13,7 +13,7 @@ Server酱是「Server酱」，英文名「ServerChan」，是从服务器推报�
 1. 一台可联网的liunx设备
 2. 拥有一个域名，免费的或者收费的都可以（中国大陆的域名需要备案）
 3. 注册一个CloudFlare账户 ( www.cloudflare.com ), 并将需要使用的域名添加到账户上，完成配置后根据需要添加服务设备的IPV6地址添加一个AAAA解析，并设为仅进行DNS解析
-4. 查询CloudFlare账户的Globel ID并记录下来，用于后续配置
+4. 查询CloudFlare账户的Globel API Key并记录下来，用于后续配置
 
 ### 使用方法
 打开命令窗口，执行以下程序：
@@ -64,7 +64,7 @@ bash /home/username/cloudflare-ddns.sh
 为了实现动态域名解析，必须让脚本保持运行以获取IP状态，这里使用系统crontab定时
 在命令行输入：`crontab -e` 后在文件最后添加以下内容
 ```shell
-*/5 * * * *  /home/username/cloudFlare-ddns.sh >/dev/null 2>&1
+*/5 * * * *  /home/username/cloudflare-ddns.sh >/dev/null 2>&1
 ```
 更改完成后保存并退出。
 在这里将脚本设置为每五分钟执行一次 `cloudflare-ddns.sh` 脚本，就可以实现动态域名解析了。
