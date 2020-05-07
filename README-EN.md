@@ -11,7 +11,7 @@ This script is a DDNS script based on the cloudflare API, which supports IPV4 an
 1. A liunx device that can be connected to the Internet.
 2. Have a domain name.
 3. Register a CloudFlare account ( www.cloudflare.com ), add the domain to the account. After the configuration is complete, add an AAAA resolution to the IPV6 address of the service device as required, and set it to perform DNS resolution only.
-4. Query the Globe ID of CloudFlare account and record it for subsequent configuration.
+4. Query the Globe API Key of CloudFlare account and record it for subsequent configuration.
 
 ### Instructions
 Open a terminal window and execute the following procedure:
