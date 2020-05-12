@@ -87,18 +87,19 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
     -H "X-Auth-Email: $auth_email" \
     -H "X-Auth-Key: $auth_key" \
     -H "Content-Type: application/json" \
-    --data "{\"id\":\"$zone_identifier\",\"type\":\"$record_type\",\"name\":\"$record_name\",\"content\":\"$ip\"}")
+    --data "{\"type\":\"$record_type\",\"name\":\"$record_name\",\"content\":\"$ip\",\"ttl\":1,\"proxied\":false}")
 
 
 #反馈更新情况 gave the feedback about the update statues
-if [[ $update == *"\"success\":false"* ]]; then
-    message="API UPDATE FAILED. DUMPING RESULTS:\n$update"
-    log "$message"
-    echo -e "$message"
-    exit 1 
-else
+if [[ $update == *"\"success\":true"* ]]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
     log "$message"
     echo "$message"
+else
+    message="API UPDATE FAILED. DUMPING RESULTS:\n$update"
+    log "$message"
+    echo -e "$message"
+    exit 1
 fi
+
