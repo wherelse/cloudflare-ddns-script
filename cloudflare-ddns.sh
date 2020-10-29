@@ -91,7 +91,7 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
 
 
 #反馈更新情况 gave the feedback about the update statues
-if [[ "$(echo $update | grep "\"success\":true")" != "" ]]; then
+if [[ $update == *"\"success\":true"* ]]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
     log "$message"
