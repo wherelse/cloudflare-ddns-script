@@ -84,7 +84,7 @@ else
     record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?name=$record_name" \
         -H "X-Auth-Email: $auth_email" \
         -H "X-Auth-Key: $auth_key" \
-        -H "Content-Type: application/json"  | grep -Po '(?<="id": ")[^"]*')
+        -H "Content-Type: application/json"  | grep -Po '(?<="id":")[^"]*')
     echo "$zone_identifier" > $id_file
     echo "$record_identifier" >> $id_file
 fi
@@ -98,7 +98,7 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
 
 
 #反馈更新情况 gave the feedback about the update statues
-if [ "$(echo $update | grep "\"success\": true")" != "" ]; then
+if [ $update == *"\"success\":true"* ]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
     Pushsend
