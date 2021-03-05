@@ -74,7 +74,7 @@ else
         -H "X-Auth-Email: $auth_email" \
         -H "X-Auth-Key: $auth_key" \
         -H "Content-Type: application/json" | grep -Po '(?<="id":")[^"]*' | head -1 )
-    record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?name=$record_name" \
+    record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?type=${record_type}&name=$record_name" \
         -H "X-Auth-Email: $auth_email" \
         -H "X-Auth-Key: $auth_key" \
         -H "Content-Type: application/json"  | grep -Po '(?<="id":")[^"]*')
