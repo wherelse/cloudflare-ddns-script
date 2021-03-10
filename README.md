@@ -1,13 +1,20 @@
 # CloudFlare DDNS script/Raspberry pi IPV6 DDNS Solution 
 
+
 #### cloudflare ddns 脚本/树莓派IPV6 DDNS解决方案
 
 中文 | [English](/README-EN.md)
 
 ## 更新[Server酱支持版本](https://github.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/tree/ServerPush) 
 
+
+
 ### 概述
 本脚本是基于cloudflare API的DDNS脚本，支持IPV4和IPV6，可通过网络方式和本地方式获取脚本安装主机的IP地址，理论支持所有使用linux系统的主机，已在debian和ubuntu上测试可用。
+
+Server酱是「Server酱」，英文名「ServerChan」，是从服务器推报警和日志到手机的工具，在本脚本中可以推送服务器的IP变动信息，使用前需要在网站使用github登录获得一个SCKEY，网站地址：[Server酱](https://sc.ftqq.com/3.version) 
+
+### 更新[Server酱支持版本](https://github.com/wherelse/cloudflare-ddns-script/tree/ServerPush) 
 
 ### 使用脚本前需要做的
 1. 一台可联网的liunx设备
@@ -18,8 +25,8 @@
 ### 使用方法
 打开命令窗口，执行以下程序：
 ```shell
-wget https://raw.githubusercontent.com/wherelse/cloudflare-ddns-script/master/cloudflare-ddns.sh
-sudo chmod +x /home/username/cloudflare-ddns.sh #目录根据实际用户等进行更改
+wget https://raw.githubusercontent.com/wherelse/cloudflare-ddns-script/ServerPush/cloudflare-ddns.sh
+sudo chmod +x /home/pi/cloudflare-ddns.sh #目录根据实际用户等进行更改
 ```
 需要对脚本内的个人配置信息进行更改，目录和上一条命令保持一致
 ```shell
@@ -39,7 +46,20 @@ ip_index="local"   #域名获取方式，本地或者网络
 eth_card="eth0"    #使用本地获取方式时绑定的网卡，使用网络方式可不更改         
 #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效
 ```
-以任意一个域名为例，ipv6.google.com 这个域名，zone_name为 `google.com` 和record_name则为 `ipv6.google.com` ，修改完成后，保存并退出。
+以任意一个域名为例，ipv6.google.com 这个域名，zone_name为 `google.com` 和record_name则为 `ipv6.google.com` 。然后修改代码中的push函数，填入SCKEY信息，title和content内容可以更改，title为推送的标题，content为推送的内容：
+
+```shell
+#server酱推送函数
+Pushsend(){
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #server酱key
+    title=IPV6地址变动
+    content=IPV6地址变动到$ip
+    curl "http://sc.ftqq.com/$key.send?text=$title&desp=$content" >/dev/null 2>&1 &
+}
+
+```
+
+修改完成后，保存并退出。
 
 在命令行中输入以下内容运行脚本：
 ```shell

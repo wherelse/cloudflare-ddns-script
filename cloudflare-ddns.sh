@@ -10,6 +10,15 @@ record_type="AAAA"             #A or AAAA,ipv4 或 ipv6解析
 ip_index="local"            #use "internet" or "local",使用本地方式还是网络方式获取地址
 eth_card="eth0"             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效,the default ethernet card is eth0
 
+
+#server酱推送函数
+Pushsend(){
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #server酱key
+    title=IPV6地址变动
+    content=IPV6地址变动到$ip
+    curl "http://sc.ftqq.com/$key.send?text=$title&desp=$content" >/dev/null 2>&1 &
+}
+
 ip_file="ip.txt"            #保存地址信息,save ip information in the ip.txt
 id_file="cloudflare.ids"
 log_file="cloudflare.log"
@@ -72,9 +81,11 @@ if [ -f $id_file ] && [ $(wc -l $id_file | cut -d " " -f 1) == 2 ]; then
 else
     zone_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$zone_name" \
         -H "X-Auth-Email: $auth_email" \
+        
         -H "X-Auth-Key: $auth_key" \
         -H "Content-Type: application/json" | grep -Po '(?<="id":")[^"]*' | head -1 )
     record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?type=${record_type}&name=$record_name" \
+
         -H "X-Auth-Email: $auth_email" \
         -H "X-Auth-Key: $auth_key" \
         -H "Content-Type: application/json"  | grep -Po '(?<="id":")[^"]*')
@@ -91,9 +102,11 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
 
 
 #反馈更新情况 gave the feedback about the update statues
+
 if [[ $update == *"\"success\":true"* ]]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
+
     log "$message"
     echo "$message"
 else
@@ -102,3 +115,5 @@ else
     echo -e "$message"
     exit 1
 fi
+
+
