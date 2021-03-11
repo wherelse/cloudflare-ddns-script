@@ -106,7 +106,7 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
 if [[ $update == *"\"success\":true"* ]]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
-
+    Pushsend
     log "$message"
     echo "$message"
 else
