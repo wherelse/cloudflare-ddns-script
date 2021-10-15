@@ -18,6 +18,12 @@ Pushsend(){
     content=IPV6地址变动到$ip
     curl "http://sc.ftqq.com/$key.send?text=$title&desp=$content" >/dev/null 2>&1 &
 }
+#QYWX推送函数
+PushQYWX(){
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #QYWXkey
+    content="HomePi的IPv6地址已变动到<br>$ip<br>CloudflareDDNS已更新."
+    curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key='$key''    -H 'Content-Type: application/json'    -d '{ "msgtype": "text","text": {"content": "'$content'"} }' >/dev/null 2>&1 &
+}
 
 ip_file="ip.txt"            #保存地址信息,save ip information in the ip.txt
 id_file="cloudflare.ids"
@@ -81,11 +87,9 @@ if [ -f $id_file ] && [ $(wc -l $id_file | cut -d " " -f 1) == 2 ]; then
 else
     zone_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$zone_name" \
         -H "X-Auth-Email: $auth_email" \
-        
         -H "X-Auth-Key: $auth_key" \
         -H "Content-Type: application/json" | grep -Po '(?<="id":")[^"]*' | head -1 )
     record_identifier=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records?type=${record_type}&name=$record_name" \
-
         -H "X-Auth-Email: $auth_email" \
         -H "X-Auth-Key: $auth_key" \
         -H "Content-Type: application/json"  | grep -Po '(?<="id":")[^"]*')
@@ -100,13 +104,13 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
     -H "Content-Type: application/json" \
     --data "{\"type\":\"$record_type\",\"name\":\"$record_name\",\"content\":\"$ip\",\"ttl\":1,\"proxied\":false}")
 
-
 #反馈更新情况 gave the feedback about the update statues
 
 if [[ $update == *"\"success\":true"* ]]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
-    Pushsend
+    #Pushsend
+    PushQYWX
     log "$message"
     echo "$message"
 else
@@ -115,5 +119,3 @@ else
     echo -e "$message"
     exit 1
 fi
-
-
