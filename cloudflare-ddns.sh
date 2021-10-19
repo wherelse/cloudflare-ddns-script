@@ -11,18 +11,17 @@ ip_index="local"            #use "internet" or "local",使用本地方式还是�
 eth_card="eth0"             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效,the default ethernet card is eth0
 
 
-#server酱推送函数
+#server酱/QYWX(企业微信群聊机器人)推送函数,the function of server chan or Enterprise WeChat
 Pushsend(){
-    key=xxxxxxxxxxxxxxxxxxxxxxxx #server酱key
+    server酱/QYWX推送函数
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #server chan key
     title=IPV6地址变动
     content=IPV6地址变动到$ip
     curl "http://sc.ftqq.com/$key.send?text=$title&desp=$content" >/dev/null 2>&1 &
-}
-#QYWX推送函数
-PushQYWX(){
-    key=xxxxxxxxxxxxxxxxxxxxxxxx #QYWXkey
-    content="HomePi的IPv6地址已变动到<br>$ip<br>CloudflareDDNS已更新."
-    curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key='$key''    -H 'Content-Type: application/json'    -d '{ "msgtype": "text","text": {"content": "'$content'"} }' >/dev/null 2>&1 &
+    # QYWX(企业微信群聊机器人)推送函数
+    # key=xxxxxxxxxxxxxxxxxxxxxxxx #QYWX key
+    # content="IPv6地址已变动到<br>$ip<br>CloudflareDDNS已更新."
+    # curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key='$key''    -H 'Content-Type: application/json'    -d '{ "msgtype": "text","text": {"content": "'$content'"} }' >/dev/null 2>&1 &
 }
 
 ip_file="ip.txt"            #保存地址信息,save ip information in the ip.txt
@@ -109,8 +108,7 @@ update=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone_identi
 if [[ $update == *"\"success\":true"* ]]; then
     message="IP changed to: $ip"
     echo "$ip" > $ip_file
-    #Pushsend
-    PushQYWX
+    Pushsend
     log "$message"
     echo "$message"
 else
