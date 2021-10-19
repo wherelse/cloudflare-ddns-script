@@ -5,7 +5,7 @@
 
 中文 | [English](/README-EN.md)
 
-## 更新[Server酱支持版本](https://github.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/tree/ServerPush) 
+## 更新[Server酱&企业微信 支持版本](https://github.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/tree/ServerPush) 
 
 
 
@@ -14,7 +14,8 @@
 
 Server酱是「Server酱」，英文名「ServerChan」，是从服务器推报警和日志到手机的工具，在本脚本中可以推送服务器的IP变动信息，使用前需要在网站使用github登录获得一个SCKEY，网站地址：[Server酱](https://sc.ftqq.com/3.version) 
 
-### 更新[Server酱支持版本](https://github.com/wherelse/cloudflare-ddns-script/tree/ServerPush) 
+## 更新[Server酱&企业微信 支持版本](https://github.com/wherelse/Raspberrypi-IPV6-DDNS-Solution/tree/ServerPush) 
+
 
 ### 使用脚本前需要做的
 1. 一台可联网的liunx设备
