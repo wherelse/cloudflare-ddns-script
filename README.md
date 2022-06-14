@@ -19,7 +19,7 @@
 打开命令窗口，执行以下程序：
 ```shell
 wget https://raw.githubusercontent.com/wherelse/cloudflare-ddns-script/master/cloudflare-ddns.sh
-sudo chmod +x /home/username/cloudflare-ddns.sh #目录根据实际用户等进行更改
+sudo chmod +x /home/username/cloudflare-ddns.sh #目录根据实际用户等进行更改  可以放在非用户目录下新的脚本支持将log文件放在脚本所在的目录
 ```
 需要对脚本内的个人配置信息进行更改，目录和上一条命令保持一致
 ```shell

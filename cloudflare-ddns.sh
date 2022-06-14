@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+# 切换到脚本所在的路径
+script_dir=$(cd $(dirname $0);pwd)
+
 # CHANGE THESE
 auth_email="xxxxxxx@xxxx.com"  #你的CloudFlare注册账户邮箱,your cloudflare account email address
 auth_key="*****************"   #你的cloudflare账户Globel ID ,your cloudflare Globel ID
@@ -8,11 +12,12 @@ record_name="Your Full Domain" #完整域名,your full domain address
 record_type="AAAA"             #A or AAAA,ipv4 或 ipv6解析
 
 ip_index="local"            #use "internet" or "local",使用本地方式还是网络方式获取地址
-eth_card="eth0"             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效,the default ethernet card is eth0
+# eth_card="eth0"             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效,the default ethernet card is eth0
+eth_card="wlp4s0"             #使用本地方式获取ip绑定的网卡，默认为wlp4s0，仅本地方式有效,the default ethernet card is eth0
 
-ip_file="ip.txt"            #保存地址信息,save ip information in the ip.txt
-id_file="cloudflare.ids"
-log_file="cloudflare.log"
+ip_file=${script_dir}"/""ip.txt"            #保存地址信息,save ip information in the ip.txt
+id_file=${script_dir}"/""cloudflare.ids"
+log_file=${script_dir}"/""cloudflare.log"
 
 
 if [ $record_type = "AAAA" ];then
