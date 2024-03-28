@@ -20,9 +20,9 @@ if [ $record_type = "AAAA" ];then
         ip=$(curl -6 ip.sb)
     elif [ $ip_index = "local" ];then
         if [ "$user" = "root" ];then
-            ip=$(ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}' | head -1)
+            ip=$(ifconfig $eth_card | grep 'inet6' | cut -f2 | awk '{ print $2}' |  grep -v '^::1$' | grep -v '^fe80' | grep -v '^f[d|c]' | head -1)
         else
-            ip=$(/sbin/ifconfig $eth_card | grep 'inet6'| grep -v '::1'|grep -v 'fe80' | cut -f2 | awk '{ print $2}' | head -1)
+            ip=$(/sbin/ifconfig $eth_card | grep 'inet6' | cut -f2 | awk '{ print $2}' |  grep -v '^::1$' | grep -v '^fe80' | grep -v '^f[d|c]' | head -1)
         fi
     else 
         echo "Error IP index, please input the right type"
